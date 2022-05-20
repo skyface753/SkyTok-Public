@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  db:
+    image: arangodb
+    ports:
+      - 8529:8529
+    volumes:
+      - ./data:/var/lib/arangodb3
+      - ./apps:/var/lib/arangodb3-apps
+    environment:
+      ARANGO_NO_AUTH: 1

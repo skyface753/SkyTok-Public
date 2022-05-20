@@ -1,0 +1,58 @@
+version: '2'
+
+services:
+  mongodb-sharded:
+    image: docker.io/bitnami/mongodb-sharded:5.0
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-sharded
+      - MONGODB_SHARDING_MODE=mongos
+      - MONGODB_CFG_PRIMARY_HOST=mongodb-cfg
+      - MONGODB_CFG_REPLICA_SET_NAME=cfgreplicaset
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_ROOT_PASSWORD=password123
+    volumes:
+      - ./mongodb-sharded:/bitnami
+    ports:
+      - "27117:27017"
+
+  mongodb-shard0:
+    image: docker.io/bitnami/mongodb-sharded:5.0
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-shard0
+      - MONGODB_SHARDING_MODE=shardsvr
+      - MONGODB_MONGOS_HOST=mongodb-sharded
+      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_REPLICA_SET_NAME=shard0
+    volumes:
+      - 'shard0_data:/bitnami'
+
+  mongodb-cfg:
+    image: docker.io/bitnami/mongodb-sharded:5.0
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-cfg
+      - MONGODB_SHARDING_MODE=configsvr
+      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_REPLICA_SET_NAME=cfgreplicaset
+    volumes:
+      - 'cfg_data:/bitnami'
+  
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8092:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password123
+      ME_CONFIG_MONGODB_URL: mongodb://root:password123@mongodb-sharded,mongodb-shard0:27017/
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+
+volumes:
+  shard0_data:
+    driver: local
+  cfg_data:
+    driver: local

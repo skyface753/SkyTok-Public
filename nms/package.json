@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "node-media-server": "^2.3.8"
+  }
+}

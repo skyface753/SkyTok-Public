@@ -1,0 +1,926 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+-- Started on 2022-03-01 23:35:20 CET
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:yQBRhcI9RHu8UxL7B+PCeA==$FJeztimlAsNkk4Ui37l9AGDiZu6VASepZs5TDHCR+A0=:DuDeAYjzp0aHqUFKEpvcTDvC3m8IxKg1DLBmH9y0dU4=';
+
+
+
+
+
+
+--
+-- Databases
+--
+
+--
+-- Database "template1" dump
+--
+
+\connect template1
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.2 (Debian 14.2-1.pgdg110+1)
+-- Dumped by pg_dump version 14.1
+
+-- Started on 2022-03-01 23:35:20 CET
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+-- Completed on 2022-03-01 23:35:21 CET
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Database "postgres" dump
+--
+
+\connect postgres
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.2 (Debian 14.2-1.pgdg110+1)
+-- Dumped by pg_dump version 14.1
+
+-- Started on 2022-03-01 23:35:21 CET
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+-- Completed on 2022-03-01 23:35:21 CET
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Database "skytok" dump
+--
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.2 (Debian 14.2-1.pgdg110+1)
+-- Dumped by pg_dump version 14.1
+
+-- Started on 2022-03-01 23:35:21 CET
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3394 (class 1262 OID 16582)
+-- Name: skytok; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE skytok WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'en_US.utf8';
+
+
+ALTER DATABASE skytok OWNER TO postgres;
+
+\connect skytok
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 220 (class 1259 OID 16692)
+-- Name: languages; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.languages (
+    id integer NOT NULL,
+    name text NOT NULL,
+    "iso_639-1" character(2) NOT NULL
+);
+
+
+ALTER TABLE public.languages OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 16691)
+-- Name: languages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.languages_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.languages_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3395 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: languages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.languages_id_seq OWNED BY public.languages.id;
+
+
+--
+-- TOC entry 214 (class 1259 OID 16643)
+-- Name: tags; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tags (
+    id bigint NOT NULL,
+    tag text NOT NULL
+);
+
+
+ALTER TABLE public.tags OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 16642)
+-- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tags_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3396 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
+
+
+--
+-- TOC entry 210 (class 1259 OID 16621)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    username text NOT NULL,
+    mail text NOT NULL,
+    password text NOT NULL,
+    language_id smallint NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 16620)
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3397 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- TOC entry 217 (class 1259 OID 16654)
+-- Name: users_tags_XREF; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."users_tags_XREF" (
+    user_id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    worth integer NOT NULL
+);
+
+
+ALTER TABLE public."users_tags_XREF" OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 16653)
+-- Name: users_tags_XREF_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."users_tags_XREF_tag_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."users_tags_XREF_tag_id_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3398 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: users_tags_XREF_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."users_tags_XREF_tag_id_seq" OWNED BY public."users_tags_XREF".tag_id;
+
+
+--
+-- TOC entry 215 (class 1259 OID 16652)
+-- Name: users_tags_XREF_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."users_tags_XREF_user_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."users_tags_XREF_user_id_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3399 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: users_tags_XREF_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."users_tags_XREF_user_id_seq" OWNED BY public."users_tags_XREF".user_id;
+
+
+--
+-- TOC entry 212 (class 1259 OID 16634)
+-- Name: videos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.videos (
+    id bigint NOT NULL,
+    path text NOT NULL,
+    length smallint NOT NULL,
+    user_id bigint NOT NULL,
+    descryption text
+);
+
+
+ALTER TABLE public.videos OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 16633)
+-- Name: videos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.videos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.videos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3400 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: videos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.videos_id_seq OWNED BY public.videos.id;
+
+
+--
+-- TOC entry 222 (class 1259 OID 16846)
+-- Name: videos_liked; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.videos_liked (
+    video_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    liked boolean NOT NULL
+);
+
+
+ALTER TABLE public.videos_liked OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 16661)
+-- Name: videos_tags_XREF; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."videos_tags_XREF" (
+    video_id bigint NOT NULL,
+    tag_id bigint NOT NULL
+);
+
+
+ALTER TABLE public."videos_tags_XREF" OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 16824)
+-- Name: videos_watched; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.videos_watched (
+    video_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    length smallint NOT NULL
+);
+
+
+ALTER TABLE public.videos_watched OWNER TO postgres;
+
+--
+-- TOC entry 3203 (class 2604 OID 16695)
+-- Name: languages id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.languages ALTER COLUMN id SET DEFAULT nextval('public.languages_id_seq'::regclass);
+
+
+--
+-- TOC entry 3202 (class 2604 OID 16646)
+-- Name: tags id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id_seq'::regclass);
+
+
+--
+-- TOC entry 3200 (class 2604 OID 16624)
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- TOC entry 3201 (class 2604 OID 16637)
+-- Name: videos id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videos ALTER COLUMN id SET DEFAULT nextval('public.videos_id_seq'::regclass);
+
+
+--
+-- TOC entry 3386 (class 0 OID 16692)
+-- Dependencies: 220
+-- Data for Name: languages; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.languages (id, name, "iso_639-1") FROM stdin;
+1	English	en
+2	Afar	aa
+3	Abkhazian	ab
+4	Afrikaans	af
+5	Amharic	am
+6	Arabic	ar
+7	Assamese	as
+8	Aymara	ay
+9	Azerbaijani	az
+10	Bashkir	ba
+11	Belarusian	be
+12	Bulgarian	bg
+13	Bihari	bh
+14	Bislama	bi
+15	Bengali/Bangla	bn
+16	Tibetan	bo
+17	Breton	br
+18	Catalan	ca
+19	Corsican	co
+20	Czech	cs
+21	Welsh	cy
+22	Danish	da
+23	German	de
+24	Bhutani	dz
+25	Greek	el
+26	Esperanto	eo
+27	Spanish	es
+28	Estonian	et
+29	Basque	eu
+30	Persian	fa
+31	Finnish	fi
+32	Fiji	fj
+33	Faeroese	fo
+34	French	fr
+35	Frisian	fy
+36	Irish	ga
+37	Scots/Gaelic	gd
+38	Galician	gl
+39	Guarani	gn
+40	Gujarati	gu
+41	Hausa	ha
+42	Hindi	hi
+43	Croatian	hr
+44	Hungarian	hu
+45	Armenian	hy
+46	Interlingua	ia
+47	Interlingue	ie
+48	Inupiak	ik
+49	Indonesian	in
+50	Icelandic	is
+51	Italian	it
+52	Hebrew	iw
+53	Japanese	ja
+54	Yiddish	ji
+55	Javanese	jw
+56	Georgian	ka
+57	Kazakh	kk
+58	Greenlandic	kl
+59	Cambodian	km
+60	Kannada	kn
+61	Korean	ko
+62	Kashmiri	ks
+63	Kurdish	ku
+64	Kirghiz	ky
+65	Latin	la
+66	Lingala	ln
+67	Laothian	lo
+68	Lithuanian	lt
+69	Latvian/Lettish	lv
+70	Malagasy	mg
+71	Maori	mi
+72	Macedonian	mk
+73	Malayalam	ml
+74	Mongolian	mn
+75	Moldavian	mo
+76	Marathi	mr
+77	Malay	ms
+78	Maltese	mt
+79	Burmese	my
+80	Nauru	na
+81	Nepali	ne
+82	Dutch	nl
+83	Norwegian	no
+84	Occitan	oc
+85	(Afan)/Oromoor/Oriya	om
+86	Punjabi	pa
+87	Polish	pl
+88	Pashto/Pushto	ps
+89	Portuguese	pt
+90	Quechua	qu
+91	Rhaeto-Romance	rm
+92	Kirundi	rn
+93	Romanian	ro
+94	Russian	ru
+95	Kinyarwanda	rw
+96	Sanskrit	sa
+97	Sindhi	sd
+98	Sangro	sg
+99	Serbo-Croatian	sh
+100	Singhalese	si
+101	Slovak	sk
+102	Slovenian	sl
+103	Samoan	sm
+104	Shona	sn
+105	Somali	so
+106	Albanian	sq
+107	Serbian	sr
+108	Siswati	ss
+109	Sesotho	st
+110	Sundanese	su
+111	Swedish	sv
+112	Swahili	sw
+113	Tamil	ta
+114	Telugu	te
+115	Tajik	tg
+116	Thai	th
+117	Tigrinya	ti
+118	Turkmen	tk
+119	Tagalog	tl
+120	Setswana	tn
+121	Tonga	to
+122	Turkish	tr
+123	Tsonga	ts
+124	Tatar	tt
+125	Twi	tw
+126	Ukrainian	uk
+127	Urdu	ur
+128	Uzbek	uz
+129	Vietnamese	vi
+130	Volapuk	vo
+131	Wolof	wo
+132	Xhosa	xh
+133	Yoruba	yo
+134	Chinese	zh
+135	Zulu	zu
+\.
+
+
+--
+-- TOC entry 3380 (class 0 OID 16643)
+-- Dependencies: 214
+-- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tags (id, tag) FROM stdin;
+95075	txt
+\.
+
+
+--
+-- TOC entry 3376 (class 0 OID 16621)
+-- Dependencies: 210
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id, username, mail, password, language_id) FROM stdin;
+1	sjoerz	seppel8426@gmail.com	$2a$12$ItoL.0hO3srK086LabVtj.wf2e3uH2ops.kkq5i7fM/PGTpkaybVu	23
+\.
+
+
+--
+-- TOC entry 3383 (class 0 OID 16654)
+-- Dependencies: 217
+-- Data for Name: users_tags_XREF; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."users_tags_XREF" (user_id, tag_id, worth) FROM stdin;
+1	95075	10
+\.
+
+
+--
+-- TOC entry 3378 (class 0 OID 16634)
+-- Dependencies: 212
+-- Data for Name: videos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.videos (id, path, length, user_id, descryption) FROM stdin;
+33213	uploadedVideos/2022-02-27T20:37:01.496ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+33214	uploadedVideos/2022-02-27T20:37:55.198ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+33215	uploadedVideos/2022-02-27T20:37:56.178ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+33216	uploadedVideos/2022-02-27T20:37:58.311ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+33217	uploadedVideos/2022-02-27T20:37:59.173ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+33218	uploadedVideos/2022-02-27T20:38:00.208ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+33219	uploadedVideos/2022-02-27T20:38:01.208ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+33220	uploadedVideos/2022-02-27T20:38:02.304ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+33221	uploadedVideos/2022-02-27T20:38:03.254ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+33222	uploadedVideos/2022-02-27T20:38:20.748ZRPReplay_Final1645608745.mp4	10	1	Test Upload #TXT
+\.
+
+
+--
+-- TOC entry 3388 (class 0 OID 16846)
+-- Dependencies: 222
+-- Data for Name: videos_liked; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.videos_liked (video_id, user_id, liked) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3384 (class 0 OID 16661)
+-- Dependencies: 218
+-- Data for Name: videos_tags_XREF; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."videos_tags_XREF" (video_id, tag_id) FROM stdin;
+33213	95075
+33214	95075
+33215	95075
+33216	95075
+33217	95075
+33218	95075
+33219	95075
+33220	95075
+33221	95075
+33222	95075
+\.
+
+
+--
+-- TOC entry 3387 (class 0 OID 16824)
+-- Dependencies: 221
+-- Data for Name: videos_watched; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.videos_watched (video_id, user_id, length) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3401 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: languages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.languages_id_seq', 1, true);
+
+
+--
+-- TOC entry 3402 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tags_id_seq', 95075, true);
+
+
+--
+-- TOC entry 3403 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+
+
+--
+-- TOC entry 3404 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: users_tags_XREF_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."users_tags_XREF_tag_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3405 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: users_tags_XREF_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."users_tags_XREF_user_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3406 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: videos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.videos_id_seq', 33222, true);
+
+
+--
+-- TOC entry 3221 (class 2606 OID 16699)
+-- Name: languages languages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.languages
+    ADD CONSTRAINT languages_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3213 (class 2606 OID 16650)
+-- Name: tags tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tags
+    ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3215 (class 2606 OID 16708)
+-- Name: tags tags_tag; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tags
+    ADD CONSTRAINT tags_tag UNIQUE (tag);
+
+
+--
+-- TOC entry 3205 (class 2606 OID 16632)
+-- Name: users users_mail; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_mail UNIQUE (mail);
+
+
+--
+-- TOC entry 3207 (class 2606 OID 16628)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3217 (class 2606 OID 16660)
+-- Name: users_tags_XREF users_tags_XREF_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."users_tags_XREF"
+    ADD CONSTRAINT "users_tags_XREF_pkey" PRIMARY KEY (user_id, tag_id);
+
+
+--
+-- TOC entry 3209 (class 2606 OID 16630)
+-- Name: users users_username; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username UNIQUE (username);
+
+
+--
+-- TOC entry 3225 (class 2606 OID 16850)
+-- Name: videos_liked videos_liked_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videos_liked
+    ADD CONSTRAINT videos_liked_pkey PRIMARY KEY (user_id, video_id);
+
+
+--
+-- TOC entry 3211 (class 2606 OID 16641)
+-- Name: videos videos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videos
+    ADD CONSTRAINT videos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3219 (class 2606 OID 16665)
+-- Name: videos_tags_XREF videos_tags_XREF_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."videos_tags_XREF"
+    ADD CONSTRAINT "videos_tags_XREF_pkey" PRIMARY KEY (video_id, tag_id);
+
+
+--
+-- TOC entry 3223 (class 2606 OID 16829)
+-- Name: videos_watched videos_watched_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videos_watched
+    ADD CONSTRAINT videos_watched_pkey PRIMARY KEY (video_id, user_id);
+
+
+--
+-- TOC entry 3226 (class 2606 OID 16700)
+-- Name: users users_languagefk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_languagefk FOREIGN KEY (language_id) REFERENCES public.languages(id) NOT VALID;
+
+
+--
+-- TOC entry 3229 (class 2606 OID 16671)
+-- Name: users_tags_XREF users_tags_XREF_tagsfk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."users_tags_XREF"
+    ADD CONSTRAINT "users_tags_XREF_tagsfk" FOREIGN KEY (tag_id) REFERENCES public.tags(id) NOT VALID;
+
+
+--
+-- TOC entry 3228 (class 2606 OID 16666)
+-- Name: users_tags_XREF users_tags_XREF_usersfk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."users_tags_XREF"
+    ADD CONSTRAINT "users_tags_XREF_usersfk" FOREIGN KEY (user_id) REFERENCES public.users(id) NOT VALID;
+
+
+--
+-- TOC entry 3235 (class 2606 OID 16856)
+-- Name: videos_liked videos_liked_userfk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videos_liked
+    ADD CONSTRAINT videos_liked_userfk FOREIGN KEY (user_id) REFERENCES public.users(id) NOT VALID;
+
+
+--
+-- TOC entry 3234 (class 2606 OID 16851)
+-- Name: videos_liked videos_liked_videofk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videos_liked
+    ADD CONSTRAINT videos_liked_videofk FOREIGN KEY (video_id) REFERENCES public.videos(id);
+
+
+--
+-- TOC entry 3231 (class 2606 OID 16686)
+-- Name: videos_tags_XREF videos_tags_XREF_tagsfk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."videos_tags_XREF"
+    ADD CONSTRAINT "videos_tags_XREF_tagsfk" FOREIGN KEY (tag_id) REFERENCES public.tags(id) NOT VALID;
+
+
+--
+-- TOC entry 3230 (class 2606 OID 16681)
+-- Name: videos_tags_XREF videos_tags_XREF_videosfk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."videos_tags_XREF"
+    ADD CONSTRAINT "videos_tags_XREF_videosfk" FOREIGN KEY (video_id) REFERENCES public.videos(id) NOT VALID;
+
+
+--
+-- TOC entry 3227 (class 2606 OID 16676)
+-- Name: videos videos_usersfk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videos
+    ADD CONSTRAINT videos_usersfk FOREIGN KEY (user_id) REFERENCES public.users(id) NOT VALID;
+
+
+--
+-- TOC entry 3233 (class 2606 OID 16837)
+-- Name: videos_watched videos_watched_userfk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videos_watched
+    ADD CONSTRAINT videos_watched_userfk FOREIGN KEY (user_id) REFERENCES public.users(id) NOT VALID;
+
+
+--
+-- TOC entry 3232 (class 2606 OID 16832)
+-- Name: videos_watched videos_watched_videofk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videos_watched
+    ADD CONSTRAINT videos_watched_videofk FOREIGN KEY (video_id) REFERENCES public.videos(id) NOT VALID;
+
+
+-- Completed on 2022-03-01 23:35:21 CET
+
+--
+-- PostgreSQL database dump complete
+--
+
+-- Completed on 2022-03-01 23:35:21 CET
+
+--
+-- PostgreSQL database cluster dump complete
+--
+
