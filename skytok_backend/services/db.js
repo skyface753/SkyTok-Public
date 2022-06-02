@@ -1,48 +1,49 @@
 // const mysql = require('mysql2/promise');
-const config = require('../config');
+const config = require("../config");
 
-const console = require('../helpers/log');
-const { Pool } = require('pg')
+const console = require("../helpers/log");
+const { Pool } = require("pg");
 const pool = new Pool({
-  user: 'postgres',
+  user: "postgres",
   host: config.postgres.host,
-  database: 'skytok',
-  password: 'example',
+  database: "skytok",
+  password: "example",
   port: 5432,
-})
+});
 
 var averageTimeInMs = 0;
 var averageTimeInMsArray = [];
-function addTimeToAverage(time){
+function addTimeToAverage(time) {
   averageTimeInMsArray.push(time);
-  averageTimeInMs = averageTimeInMsArray.reduce((a,b) => a + b, 0) / averageTimeInMsArray.length;
+  averageTimeInMs =
+    averageTimeInMsArray.reduce((a, b) => a + b, 0) /
+    averageTimeInMsArray.length;
   // console.log("Average time: " + averageTimeInMs.toPrecision(3));
 }
 
 const queryPG = async (text, params) => {
-  try{
-
-    const start = Date.now()
-    const res = await pool.query(text, params)
-    const duration = Date.now() - start
+  try {
+    const start = Date.now();
+    const res = await pool.query(text, params);
+    const duration = Date.now() - start;
     // console.log(`${text} took ${duration}ms`)
-    addTimeToAverage(duration)
-    return res.rows
-  }catch(e){
+    addTimeToAverage(duration);
+    console.log(`${text} took ${duration}ms`);
+    console.log("Rows: " + res.rows.length);
+    return res.rows;
+  } catch (e) {
     // if(process.env.MODE == "TEST"){
-      console.log("Error TEXT: ", text);
-      console.log(e)
+    console.log("Error TEXT: ", text);
+    console.log(e);
     // }
     return null;
   }
-}
+};
 
 module.exports = {
   // query: (text, params) => pool.query(text, params),
   queryPG,
-}
-
-
+};
 
 // var retryCounter = 0;
 // async function query(sql, params) {
@@ -76,5 +77,3 @@ module.exports = {
 //   query,
 //   queryPG
 // };
-
-
